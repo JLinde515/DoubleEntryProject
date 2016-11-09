@@ -39,6 +39,7 @@ public class Accounts {
     public static double operatingExpense;
     public static double unearnedRevenue;
     public static double equipment;
+    public static double inventory;
 
     /*
         Constructs a new object of Accounts class with serialNo, description and amount.
@@ -58,11 +59,33 @@ public class Accounts {
                 serialNo, description, amount);
     }
 
+    public void setTotalAssets(double thisAmount)
+    {
+        totalAssets = thisAmount;
+    }
+
+    public static void setTotalLiabilities(double thisAmount)
+    {
+        totalLiabilities = thisAmount;
+    }
+
     /*
         Methods for crediting and debiting as well as whether that means an entry to the left or
          right side of the T-Account (add or subtract thisAmount). Also methods for
          getting values.
      */
+
+    public double creditInventory(double thisAmount)
+    {
+        inventory -= thisAmount;
+        return inventory;
+    }
+
+    public double debitInventory(double thisAmount)
+    {
+        inventory += thisAmount;
+        return inventory;
+    }
 
     public double creditEquipment(double thisAmount)
     {
@@ -251,16 +274,16 @@ public class Accounts {
     public void updateIncomeStatement()
     {
         totalRevenue = revenue;
-        totalExpenses = wagesExpense + rentExpense + suppliesExpense;
+        totalExpenses = wagesExpense + rentExpense + suppliesExpense + operatingExpense;
         totalIncome = totalRevenue - totalExpenses;
     }
 
     public void updateBalanceSheet()
     {
-        totalAssets = accountsReceivable + cash + prepaidRent + supplies + equipment;
-        totalLiabilities = accountsPayable + notesPayable + unearnedRevenue;
-        stockholdersEquity = stock;
-        double estimateSE = stock - rentExpense - wagesExpense - suppliesExpense- operatingExpense;
+        totalAssets = totalAssets + accountsReceivable + cash + prepaidRent + supplies + equipment;
+        totalLiabilities = totalLiabilities + accountsPayable + notesPayable + unearnedRevenue;
+        stockholdersEquity = stockholdersEquity + stock;
+        estimateSE = totalAssets - totalLiabilities;
     }
 
     public double getEstimateSE()
