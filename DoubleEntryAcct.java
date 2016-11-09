@@ -8,10 +8,8 @@ public class DoubleEntryAcct
 
     public static void main(String[] args)
     {
-
+        SimpleDataSource.init("database.properties");
         Scanner in = new Scanner(System.in);
-
-
         boolean done = false;
         while(!done)
         {
